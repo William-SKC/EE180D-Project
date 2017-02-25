@@ -1,7 +1,7 @@
 ## EE180DB Localization w/ only wifi strengths
 import numpy as np
 import scipy.stats
-import os
+#import os
 
 class loc_point:
     
@@ -27,8 +27,6 @@ loc_point_list = []
 list_dict_point = []
 
 
-
-
 for i in range (0, 61):
     file_name = 'FINAL_%d.txt' %i
     file="/reference_points/"+file_name
@@ -36,7 +34,8 @@ for i in range (0, 61):
 
     point_dict = {}
 
-    with open(path, 'r') as f:
+    #with open(path, 'r') as f:
+    with open(file_name, 'r') as f
         for line in f:
             splitLine = line.split()
             point_dict.update({line.split()[0]: [line.split()[1], line.split()[2]]})
@@ -46,8 +45,11 @@ for i in range (0, 61):
     [x_loc, y_loc] = [float(line_map.split()[1]), float(line_map.split()[2])] 
     x = loc_point(i, x_loc, y_loc)
     loc_point_list.append(x)
-
-for i, point_dict in enumerate(list_dict_point):
+i = 0
+print len(list_dict_point)
+while i < len(list_dict_point):
+    print i
+    point_dict = list_dict_point[i]
     prob = 0
     for addr in point_dict:
         if addr in dic_scan:
@@ -58,14 +60,25 @@ for i, point_dict in enumerate(list_dict_point):
             scan_strength = float(scan_strength)
             addr_prob = min(scipy.stats.norm(pt_mean, pt_std).cdf(scan_strength), 1 - scipy.stats.norm(pt_mean, pt_std).cdf(scan_strength))
             prob = prob + addr_prob
+    print(str(i)+'\t'+str(prob))
     loc_point_list[i].update_prob(prob)
+
+    if prob < 0.1 and i <= 56:
+        print i
+        i = i + 4
+    else:
+        i = i + 1
+        
 
     strength_list = sorted(loc_point_list, key=lambda loc: loc.prob, reverse=True)
 
+for j in range (len(strength_list)):
+    print "Name : ", loc_point_list[j].name, ", probability: ", loc_point_list[j].prob
 
+'''
 for j in range (len(strength_list)):
     print "Name : ", strength_list[j].name, ", probability: ", strength_list[j].prob
-
+'''
 totsum = strength_list[0].prob
 x_acc = strength_list[0].x_loc * strength_list[0].prob
 y_acc = strength_list[0].y_loc * strength_list[0].prob
