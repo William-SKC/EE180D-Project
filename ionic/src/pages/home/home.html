@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Hospitably
+    </ion-title>     
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  Welcome to Hospitably
+  <p>
+    <ion-list>
+  <ion-item>
+    <p>Press the button to begin</p>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addUser()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-item>
+  <ion-item *ngFor="let user of users | async">
+    <p>Hi, {{user.Name}}</p>
+    <p>Your destination is {{user.Destination}}</p>
+    <p>Your current location is {{user.Location}}</p>
+  </ion-item>
+</ion-list>
+  </p>
+</ion-content>
