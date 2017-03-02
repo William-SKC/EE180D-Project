@@ -61,6 +61,7 @@ def Loc_wifi_start(map_dict,list_dict_point):
         with open('history.txt', 'w') as f:
             f.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est) + '\n')
 
+
         status_file.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est))
         status_file.close
         return 1
