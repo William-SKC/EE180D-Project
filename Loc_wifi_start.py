@@ -55,7 +55,13 @@ def Loc_wifi_start(map_dict,list_dict_point):
         x_est = x_acc/totsum
         y_est = y_acc/totsum
         cloest_ref_point = strength_list[0].name
-        print ('starting location: ' + 'x=' + str(x_est) + '\t'+ 'y='+str(y_est))
+        print ('current location: ' + 'x=' + str(x_est) + '\t'+ 'y='+str(y_est))
+
+        open('history.txt', 'w').close()
+        with open('history.txt', 'w') as f:
+            f.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est) + '\n')
+
+
         status_file.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est))
         status_file.close
         return 1
