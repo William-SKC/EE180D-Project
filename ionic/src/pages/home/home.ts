@@ -13,7 +13,7 @@ export class HomePage {
   loc: FirebaseListObservable<any>
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, angFire: AngularFire) {
-  	var ref = firebase.database.ref("Users");
+  	//var ref = firebase.database.ref("Users");
   	// ref.child("Users").orderByChild("Toggle").equalTo("on").once("value",function(snapshot) {
     // var userData = snapshot.val();
     // if (userData){
