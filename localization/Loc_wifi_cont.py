@@ -21,7 +21,7 @@ def Loc_wifi_cont(map_dict,list_dict_point):
 	loc_point_list = []  
 	starting_point = starting_point-5
 	for i in range (0, 10):
-		check_pos = (i+starting_point)%60
+		check_pos = (i+starting_point)%61
 		print check_pos
 		point_dict = list_dict_point[check_pos]
 		prob = 0
@@ -62,10 +62,17 @@ def Loc_wifi_cont(map_dict,list_dict_point):
 		y_est = y_acc/totsum
 		cloest_ref_point = strength_list[0].name
 
-		content = status_file.read()
+		content = status_file.read()	 #update the new location estimate 
 		status_file.seek(0, 0)
 		status_file.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est))
 		status_file.close
+
+		with open('history.txt', 'r+') as f:
+			line_f = f.readline()
+			while(line_f):
+				line_f = f.readline()
+				pass
+			f.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est) + '\n')
 
 		print ('Current location: ' + 'x=' + str(x_est) + '\t'+ 'y='+str(y_est))
 		return 1
