@@ -1,10 +1,13 @@
 
 import numpy as np
 import scipy.stats
+import time 
 
 import loc_point_class
 
 def Loc_wifi_start(map_dict,list_dict_point):
+    start_time = time.time()
+    print('start: %s' %start_time )
     with open("scan_results.txt") as scan_file:
         dic_scan = dict(line.split() for line in scan_file)
 
@@ -24,21 +27,25 @@ def Loc_wifi_start(map_dict,list_dict_point):
                 scan_strength = float(scan_strength)
                 addr_prob = min(scipy.stats.norm(pt_mean, pt_std).cdf(scan_strength), 1 - scipy.stats.norm(pt_mean, pt_std).cdf(scan_strength))
                 prob = prob + addr_prob
+        
         [x_loc, y_loc] = map_dict[str(i)]
         x = loc_point_class.loc_point(i, float(x_loc), float(y_loc), prob)
         loc_point_list.append(x)
-        
+        '''
         if prob < 0.1 and i <= 56:
-            print i
             i = i + 4
         else:
-            i = i + 1	            
-
+            i = i + 1	
+        '''
+        i = i+1
+    
+        print('go through all the point: %s' %(time.time() - start_time))
+    
     strength_list = sorted(loc_point_list, key=lambda loc: loc.prob, reverse=True)
-
+    
     for j in range (len(strength_list)):
         print "Name : ", loc_point_list[j].name, ", probability: ", loc_point_list[j].prob
-
+    
     totsum = strength_list[0].prob
     x_acc = strength_list[0].x_loc * strength_list[0].prob
     y_acc = strength_list[0].y_loc * strength_list[0].prob
@@ -64,9 +71,11 @@ def Loc_wifi_start(map_dict,list_dict_point):
 
         status_file.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est))
         status_file.close
+        print('done: %s' %(time.time() - start_time))
         return 1
 
 
     else: 
         print ('Not in the area')
         return 0 
+    
