@@ -31,13 +31,11 @@ def Loc_wifi_start(map_dict,list_dict_point):
         [x_loc, y_loc] = map_dict[str(i)]
         x = loc_point_class.loc_point(i, float(x_loc), float(y_loc), prob)
         loc_point_list.append(x)
-        '''
+        
         if prob < 0.1 and i <= 56:
             i = i + 4
         else:
             i = i + 1	
-        '''
-        i = i+1
     
         print('go through all the point: %s' %(time.time() - start_time))
     
