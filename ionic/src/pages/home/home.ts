@@ -21,6 +21,7 @@ export class HomePage {
     // }
 // });
 
+    // a variable on class homepage that connects to the node Users through the angfire implementation of Firebase
   	this.users = angFire.database.list('/Users');
   	this.loc = angFire.database.list('/Users/Locations');
 
@@ -31,6 +32,8 @@ export class HomePage {
   	// 	);
   }
 
+  //function addUser when button is clicked
+  //function in the form of an alert
   addUser():void {
   	let prompt = this.alertCtrl.create({
   		title: 'Welcome to Hospitably',
@@ -55,15 +58,17 @@ export class HomePage {
   		{
   			text: "Navigate",
   			handler: data => {
+          //pushes this data into the angFire object, which is connected to a certain node that is specified above
   				this.users.push({
   					Name: data.user,
   					Destination: data.dest,
-  					Toggle: "on"
+  					Velocity: 0
   				})
   			}
   		}
   	]
   	});
+    //calls or "presents" the alert
   	prompt.present();
   }
 

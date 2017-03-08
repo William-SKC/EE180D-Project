@@ -13,15 +13,18 @@
   <ion-item>
     <p>Press the button to begin</p>
     <ion-buttons end>
+      <!--calls the function addUser() when the button is clicked-->
       <button ion-button icon-only (click)="addUser()">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
   </ion-item>
   <ion-item *ngFor="let user of users | async">
+    <!--user is declared in the scope of this loop-->
     <p>Hi, {{user.Name}}</p>
     <p>Your destination is {{user.Destination}}</p>
     <p>Your current location is {{user.Location}}</p>
+    <p>You are walking at {{user.Velocity}} m/s</p>
   </ion-item>
 </ion-list>
   </p>
