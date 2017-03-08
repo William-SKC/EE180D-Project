@@ -36,6 +36,8 @@ def Loc_wifi_start(map_dict,list_dict_point):
             i = i + 4
         else:
             i = i + 1	
+        
+    
     
         print('go through all the point: %s' %(time.time() - start_time))
     
