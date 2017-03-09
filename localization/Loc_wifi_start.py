@@ -1,16 +1,23 @@
 
 import numpy as np
 import scipy.stats
-import time 
-
+import time
+from firebase import firebase
 import loc_point_class
 
+#firebase = firebase.FirebaseApplication('https://hospitably-c30d7.firebaseio.com/', None)
+#result = firebase.get('/map', None)
+#print result
+#json1_data = result[0]
+#print type(json1_data)
+
+#map_dict has the points mapped to the x & y coordinates
+#list_dict_point is a list of dictionaries for each point
 def Loc_wifi_start(map_dict,list_dict_point):
     start_time = time.time()
     print('start: %s' %start_time )
     with open("scan_results.txt") as scan_file:
         dic_scan = dict(line.split() for line in scan_file)
-
     status_file = open('status.txt', 'w')
 
     loc_point_list = []
