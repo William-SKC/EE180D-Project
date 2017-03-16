@@ -5,7 +5,7 @@ def get_nearest_less_element(d, k):
     return d[str(max(key for key in map(float, d.keys()) if key <= k))]
 
 
-def localization_adjustemnt(curr_state, lock, hist_loc, scan_states):
+def localization_adjustment(curr_state, lock, hist_loc, scan_states):
 	print 'scan_states: '
 	print scan_states
 	scan_time = scan_states[0]

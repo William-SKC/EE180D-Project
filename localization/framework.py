@@ -9,7 +9,7 @@ import time
 
 import Loc_wifi_ini
 import wifi_localization_once
-import localization_adjustemnt
+import localization_adjustment
 
 
 from threading import Thread
@@ -57,7 +57,7 @@ def localization_wifi(curr_state, lock, hist_loc, map_dict, list_dict_point):
 			print('Wifi scan: '+ str(scan_states[0]) + ' ' + str(scan_states[1]) + ' ' + str(scan_states[2]) + '\n')
 			time.sleep(2)
 			#adjustment
-			localization_adjustemnt.localization_adjustemnt(curr_state, lock, hist_loc, scan_states)
+			localization_adjustment.localization_adjustment(curr_state, lock, hist_loc, scan_states)
 			time.sleep(1)
 
 
