@@ -1,23 +1,19 @@
 
 import numpy as np
 import scipy.stats
-import time
-from firebase import firebase
+import time 
+import os
+
 import loc_point_class
 
-#firebase = firebase.FirebaseApplication('https://hospitably-c30d7.firebaseio.com/', None)
-#result = firebase.get('/map', None)
-#print result
-#json1_data = result[0]
-#print type(json1_data)
-
-#map_dict has the points mapped to the x & y coordinates
-#list_dict_point is a list of dictionaries for each point
-def Loc_wifi_start(map_dict,list_dict_point):
+def wifi_localization_once(map_dict,list_dict_point):
+    os.system('sh testPoint.sh')
     start_time = time.time()
+
     print('start: %s' %start_time )
     with open("scan_results.txt") as scan_file:
         dic_scan = dict(line.split() for line in scan_file)
+
     status_file = open('status.txt', 'w')
 
     loc_point_list = []
@@ -43,16 +39,15 @@ def Loc_wifi_start(map_dict,list_dict_point):
             i = i + 4
         else:
             i = i + 1	
-        
     
-    
-        print('go through all the point: %s' %(time.time() - start_time))
+        #print('go through all the point: %s' %(time.time() - start_time))
     
     strength_list = sorted(loc_point_list, key=lambda loc: loc.prob, reverse=True)
     
+    '''
     for j in range (len(strength_list)):
         print "Name : ", loc_point_list[j].name, ", probability: ", loc_point_list[j].prob
-    
+    '''
     totsum = strength_list[0].prob
     x_acc = strength_list[0].x_loc * strength_list[0].prob
     y_acc = strength_list[0].y_loc * strength_list[0].prob
@@ -70,19 +65,21 @@ def Loc_wifi_start(map_dict,list_dict_point):
         y_est = y_acc/totsum
         cloest_ref_point = strength_list[0].name
         print ('current location: ' + 'x=' + str(x_est) + '\t'+ 'y='+str(y_est))
-
+        '''
         open('history.txt', 'w').close()
         with open('history.txt', 'w') as f:
             f.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est) + '\n')
-
+        '''
 
         status_file.write(str(strength_list[0].name) + '\t' + str(x_est) + '\t'+ str(y_est))
         status_file.close
         print('done: %s' %(time.time() - start_time))
-        return 1
+        return [start_time, x_est, y_est]
 
 
     else: 
         print ('Not in the area')
-        return 0 
+        return [start_time, -100, -200]
+
+
     
