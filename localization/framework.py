@@ -74,7 +74,7 @@ hist_loc = Manager().dict()
 starting_loc = wifi_localization_once.wifi_localization_once(map_dict, list_dict_point)
 curr_state = Array('d', starting_loc)
 
-conn = 1 
+#conn = 1 
 p_wifi = partial(localization_wifi, curr_state, lock, hist_loc, map_dict, list_dict_point)
 p_IMU = partial(localization_IMU, curr_state, lock, hist_loc, conn)
 
