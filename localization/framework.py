@@ -75,6 +75,7 @@ print 'starting loc: '
 print starting_loc
 curr_state = Array('d', starting_loc)
 
+
 p_wifi = partial(localization_wifi, curr_state, lock, hist_loc, map_dict, list_dict_point)
 p_IMU = partial(localization_IMU, curr_state, lock, hist_loc, conn)
 
