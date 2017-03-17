@@ -19,9 +19,9 @@
     </ion-buttons>
   </ion-item>
   <ion-item *ngFor="let user of users | async">
-    <p>Hi, {{user.Name}}</p>
-    <p>Your destination is {{user.Destination}}</p>
-    <p>Your current location is {{user.Location}}</p>
+    <p>Timestamp: {{user.time}}</p>
+    <p>dx: {{user.dx}}</p>
+    <p>dy: {{user.dy}}</p>
   </ion-item>
 </ion-list>
   </p>

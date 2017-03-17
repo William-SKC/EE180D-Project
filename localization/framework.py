@@ -10,7 +10,7 @@ import time
 import Loc_wifi_ini
 import wifi_localization_once
 import localization_adjustment
-
+import sample
 
 from threading import Thread
 from multiprocessing import Process, Array, Lock, Manager, Value
@@ -18,25 +18,15 @@ from functools import partial
 
 def localization_wifi(curr_state, lock, hist_loc, map_dict, list_dict_point):
 	try:
-		'''
-		scan_states = [0, 0, 0]
-		scan_states[0] = curr_state[0]
-		scan_states[1] = curr_state[1]
-		scan_states[2] = curr_state[2]
-		'''
+
 		while 1:
 			scan_states = wifi_localization_once.wifi_localization_once(map_dict, list_dict_point) # return [x, y, time]
-			'''
-			scan_states[0] = time.time()
-			scan_states[1] = scan_states[1]+3
-			scan_states[2] = scan_states[1]+5
-			'''
-			print('Wifi scan: '+ str(scan_states[0]) + ' ' + str(scan_states[1]) + ' ' + str(scan_states[2])+'\n')
-			time.sleep(2)
+			print('Wifi scan: '+ str(scan_states[0]) + ' ' + str(scan_states[1]) + ' ' + str(scan_states[2]))
+			#time.sleep(2)
 
 			#adjustment
-			localization_adjustment.localization_adjustment(curr_state, lock, hist_loc, scan_states)
-			time.sleep(1)
+		#	localization_adjustment.localization_adjustment(curr_state, lock, hist_loc, scan_states)
+			#time.sleep(1)
 
 
 	except KeyboardInterrupt:
@@ -44,9 +34,11 @@ def localization_wifi(curr_state, lock, hist_loc, map_dict, list_dict_point):
 
 def localization_IMU(curr_state, lock, hist_loc, conn):
 	while 1:
-		movements = server.server_cont(conn)
-		print 'movements: '
-		#movements = [time.time(), 2, 3]
+		msg = server.server_cont(conn)
+		print 'msg:'
+		print msg
+		movements = [float(msg.split( )[0]), float(msg.split( )[1]), float(msg.split( )[2])]
+		print 'movements:'
 		print movements
 		with lock:
 			curr_state[0] = movements[0]
@@ -56,8 +48,11 @@ def localization_IMU(curr_state, lock, hist_loc, conn):
 			print('******	Current	states	******')
 			print('IMU: '+ str(curr_state[0]) + ' ' + str(curr_state[1]) + ' ' + str(curr_state[2]))
 			print('********************************\n')
-		time.sleep(0.5)
+		#time.sleep(0.5)
+                with lock:
+                        sample.streamData(curr_state)
 
+        
 
 
 #### main: 
@@ -72,9 +67,15 @@ test_val = Value('f',0)
 lock = Lock()
 hist_loc = Manager().dict()
 starting_loc = wifi_localization_once.wifi_localization_once(map_dict, list_dict_point)
+while starting_loc == 0:
+   # starting_loc = wifi_localization_once.wifi_localization_once(map_dict, list_dict_point)
+    starting_loc [time.time(), 14, 0.5]
+    print("rescan from starting location.")
+print 'starting loc: '
+print starting_loc
 curr_state = Array('d', starting_loc)
 
-#conn = 1 
+
 p_wifi = partial(localization_wifi, curr_state, lock, hist_loc, map_dict, list_dict_point)
 p_IMU = partial(localization_IMU, curr_state, lock, hist_loc, conn)
 

@@ -14,7 +14,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, angFire: AngularFire) {
   	//Declares angFire objects on the class HomePage and directs them to their specific node.
-  	this.users = angFire.database.list('/Users');
+  	this.users = angFire.database.list('/loc_data');
   	this.loc = angFire.database.list('/Users/Locations')
   }
 
