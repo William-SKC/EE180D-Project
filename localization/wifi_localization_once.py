@@ -79,7 +79,7 @@ def wifi_localization_once(map_dict,list_dict_point):
 
     else: 
         print ('Not in the area')
-        return [start_time, -100, -200]
+        return 0
 
 
     

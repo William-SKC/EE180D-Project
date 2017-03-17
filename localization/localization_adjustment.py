@@ -10,8 +10,7 @@ def localization_adjustment(curr_state, lock, hist_loc, scan_states):
 	print scan_states
 	scan_time = scan_states[0]
 	print('Adjust current states: '+ str(curr_state[0]) + ' ' + str(curr_state[1]) + ' ' + str(curr_state[2]))	
-	print hist_loc
-	print scan_time
+	#print hist_loc
 	with lock:
 		num = scan_time
 		matched_loc = hist_loc.get(num, hist_loc[min(hist_loc.keys(), key=lambda k: abs(float(k)-num))]) # find the clostest key(time) for matched location
@@ -36,8 +35,8 @@ def localization_adjustment(curr_state, lock, hist_loc, scan_states):
 	print adjust_amount
 	print('before adjustment for current states: '+ str(curr_state[0]) + ' ' + str(curr_state[1]) + ' ' + str(curr_state[2]))
 	with lock:
-		curr_state[1] = curr_state[1]+adjust_amount[0]*kalman_gain
-		curr_state[2] = curr_state[2]+adjust_amount[1]*kalman_gain
+		curr_state[1] = curr_state[1]*(1-kalman_gain)+scan_states[1]*kalman_gain
+		curr_state[2] = curr_state[2]*(1-kalman_gain)+scan_states[2]*kalman_gain
 	print('after adjustment for current states: '+ str(curr_state[0]) + ' ' + str(curr_state[1]) + ' ' + str(curr_state[2]))
 	print matched_loc
 

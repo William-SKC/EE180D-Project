@@ -4,7 +4,7 @@ import sys
 
 def server_ini():
 	pass
-	host = '192.168.0.21'
+	host = 'asaebi.local'
 	port = 1200
 	address = (host, port)
 
