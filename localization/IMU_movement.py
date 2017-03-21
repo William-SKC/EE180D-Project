@@ -35,12 +35,13 @@ elif direction == 'W' and turn == -1:
 
 if direction == 'N':
     dY = stride*num_steps
-if direction == 'S':
+elif direction == 'S':
     dY = -stride*num_steps
-if direction == 'E':
+elif direction == 'E':
     dX = stride*num_steps
-if direction == 'W':
+elif direction == 'W':
     dX = -stride*num_steps
 
-
+movement[1] = dX
+movement[2] = dY
 return movements
