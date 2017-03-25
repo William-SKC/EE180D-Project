@@ -27,7 +27,7 @@ export class HomePage {
   		inputs: [
   		{
   			name: 'user',
-  			placeholder: 'Your Name"'
+  			placeholder: 'Your Name'
   		},
   		{
   			name: 'dest',

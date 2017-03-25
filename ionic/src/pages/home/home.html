@@ -8,7 +8,8 @@
 
 <ion-content padding>
   Welcome to Hospitably
-  <p>
+  <ion-img width="500" height="500" src="../assets/map.jpg"></ion-img>
+  <p>  
     <ion-list>
   <ion-item>
     <p>Press the button to begin</p>
@@ -20,8 +21,8 @@
   </ion-item>
   <ion-item *ngFor="let user of users | async">
     <p>Timestamp: {{user.time}}</p>
-    <p>dx: {{user.dx}}</p>
-    <p>dy: {{user.dy}}</p>
+    <p>Your x position is: {{user.dx}}</p>
+    <p>Your y position is: {{user.dy}}</p>
   </ion-item>
 </ion-list>
   </p>
